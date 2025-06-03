@@ -1,0 +1,332 @@
+/**
+ * Styles admin pour le plugin Natcash Payment Gateway
+ */
+
+/* Meta box des détails de commande */
+.natcash-order-details {
+    font-size: 13px;
+}
+
+.natcash-order-details p {
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.natcash-order-details strong {
+    color: #333;
+}
+
+/* Actions administrateur */
+.natcash-admin-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.natcash-admin-actions .button {
+    margin-right: 8px;
+    margin-bottom: 5px;
+}
+
+.natcash-approve {
+    background: #00a32a !important;
+    border-color: #00a32a !important;
+    color: white !important;
+}
+
+.natcash-approve:hover {
+    background: #008a20 !important;
+    border-color: #008a20 !important;
+}
+
+.natcash-reject {
+    background: #d63638 !important;
+    border-color: #d63638 !important;
+    color: white !important;
+}
+
+.natcash-reject:hover {
+    background: #b32d2e !important;
+    border-color: #b32d2e !important;
+}
+
+/* Bouton de visualisation du reçu */
+.natcash-order-details .button {
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Configuration de la passerelle */
+.woocommerce_page_wc-settings .natcash-settings-section {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.natcash-settings-section h3 {
+    margin-top: 0;
+    color: #0073aa;
+}
+
+/* Messages de statut */
+.natcash-status-message {
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.natcash-status-success {
+    background: #e7f7e7;
+    border: 1px solid #00a32a;
+    color: #00a32a;
+}
+
+.natcash-status-error {
+    background: #ffeaea;
+    border: 1px solid #d63638;
+    color: #d63638;
+}
+
+.natcash-status-warning {
+    background: #fff8e5;
+    border: 1px solid #f0b849;
+    color: #8a6914;
+}
+
+/* Tableau des commandes Natcash */
+.natcash-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.natcash-orders-table th,
+.natcash-orders-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.natcash-orders-table th {
+    background: #f1f1f1;
+    font-weight: 600;
+    color: #333;
+}
+
+.natcash-orders-table tr:hover {
+    background: #f9f9f9;
+}
+
+/* Indicateurs de statut */
+.natcash-status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.natcash-status-pending {
+    background: #f0b849;
+}
+
+.natcash-status-approved {
+    background: #00a32a;
+}
+
+.natcash-status-rejected {
+    background: #d63638;
+}
+
+/* Aperçu du reçu dans l'admin */
+.natcash-receipt-preview {
+    max-width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    background: white;
+}
+
+.natcash-receipt-preview img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Modal pour l'aperçu du reçu */
+.natcash-modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.natcash-modal-content {
+    position: relative;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    border-radius: 8px;
+}
+
+.natcash-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.natcash-modal-close:hover {
+    color: #000;
+}
+
+/* Statistiques du tableau de bord */
+.natcash-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.natcash-stat-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.natcash-stat-number {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0073aa;
+    margin-bottom: 5px;
+}
+
+.natcash-stat-label {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Notifications admin */
+.natcash-admin-notice {
+    position: relative;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-left: 4px solid #0073aa;
+    background: #f0f8ff;
+}
+
+.natcash-admin-notice.error {
+    border-left-color: #d63638;
+    background: #ffeaea;
+}
+
+.natcash-admin-notice.success {
+    border-left-color: #00a32a;
+    background: #e7f7e7;
+}
+
+.natcash-admin-notice.warning {
+    border-left-color: #f0b849;
+    background: #fff8e5;
+}
+
+/* Responsive pour l'admin */
+@media (max-width: 768px) {
+    .natcash-admin-actions .button {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+    
+    .natcash-dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .natcash-modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+    
+    .natcash-orders-table {
+        font-size: 12px;
+    }
+    
+    .natcash-orders-table th,
+    .natcash-orders-table td {
+        padding: 8px 6px;
+    }
+}
+
+/* États de chargement pour l'admin */
+.natcash-admin-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.natcash-admin-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid #0073aa;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: natcash-admin-spin 1s linear infinite;
+}
+
+@keyframes natcash-admin-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltips */
+.natcash-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.natcash-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+
+.natcash-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+

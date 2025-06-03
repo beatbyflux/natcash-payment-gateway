@@ -1,0 +1,313 @@
+/**
+ * Styles pour le plugin Natcash Payment Gateway
+ */
+
+/* Formulaire de paiement */
+.natcash-payment-form {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Affichage du montant */
+.natcash-amount-display {
+    background: #fff;
+    border: 2px solid #0073aa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.natcash-amount-display h4 {
+    margin: 0 0 10px 0;
+    color: #0073aa;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.amount-conversion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.usd-amount {
+    color: #2c5aa0;
+}
+
+.conversion-arrow {
+    color: #666;
+    font-size: 16px;
+}
+
+.htg-amount {
+    color: #d63638;
+    font-size: 20px;
+}
+
+/* Instructions de paiement */
+.natcash-instructions {
+    background: #fff;
+    border-left: 4px solid #00a32a;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.natcash-instructions h4 {
+    margin: 0 0 10px 0;
+    color: #00a32a;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.payment-details p {
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.instruction-text {
+    background: #e7f7e7;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 3px solid #00a32a;
+}
+
+.account-name {
+    font-style: italic;
+    color: #666;
+}
+
+/* Upload de reçu */
+.natcash-receipt-upload {
+    margin-bottom: 20px;
+}
+
+.natcash-receipt-upload h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.required {
+    color: #d63638;
+    font-weight: bold;
+}
+
+.file-upload-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+#natcash_receipt {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: #0073aa;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.file-upload-label:hover {
+    background: #005a87;
+}
+
+.upload-icon {
+    font-size: 16px;
+}
+
+.file-info {
+    margin-top: 8px;
+    color: #666;
+    font-size: 12px;
+}
+
+/* Aperçu du fichier */
+.file-preview {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.preview-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #333;
+    word-break: break-all;
+}
+
+.remove-file {
+    background: #d63638;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-file:hover {
+    background: #b32d2e;
+}
+
+/* Erreurs d'upload */
+.upload-error {
+    margin-top: 10px;
+    padding: 10px;
+    background: #ffeaea;
+    border: 1px solid #d63638;
+    border-radius: 4px;
+    color: #d63638;
+    font-size: 14px;
+}
+
+/* Confirmation */
+.natcash-confirmation {
+    margin-top: 20px;
+}
+
+.confirmation-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.confirmation-checkbox input[type="checkbox"] {
+    margin: 0;
+    transform: scale(1.2);
+}
+
+/* Page de remerciement */
+.natcash-thankyou {
+    background: #f0f8ff;
+    border: 1px solid #0073aa;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.natcash-thankyou h3 {
+    color: #0073aa;
+    margin-top: 0;
+}
+
+.natcash-thankyou p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .natcash-payment-form {
+        padding: 15px;
+    }
+    
+    .amount-conversion {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .conversion-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .file-upload-label {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .confirmation-checkbox {
+        font-size: 13px;
+    }
+}
+
+/* États de chargement */
+.natcash-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.natcash-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #0073aa;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: natcash-spin 1s linear infinite;
+}
+
+@keyframes natcash-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Messages de succès */
+.natcash-success {
+    background: #e7f7e7;
+    border: 1px solid #00a32a;
+    border-radius: 4px;
+    padding: 12px;
+    color: #00a32a;
+    margin: 10px 0;
+}
+
+/* Icônes personnalisées */
+.natcash-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.natcash-icon-success {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300a32a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>');
+}
+
+.natcash-icon-error {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23d63638"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>');
+}
+

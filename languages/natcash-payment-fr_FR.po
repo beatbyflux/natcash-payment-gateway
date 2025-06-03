@@ -1,0 +1,260 @@
+# French (France) language file for Natcash Payment Gateway
+# Copyright (C) 2024 BeatByFlux
+# This file is distributed under the same license as the Natcash Payment Gateway package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Natcash Payment Gateway 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/beatbyflux/natcash-payment-gateway/issues\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: BeatByFlux <contact@beatbyflux.com>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: natcash-payment.php:85
+msgid "Natcash Payment Gateway nécessite WooCommerce pour fonctionner. Veuillez %sinstaller et activer WooCommerce%s."
+msgstr "Natcash Payment Gateway nécessite WooCommerce pour fonctionner. Veuillez %sinstaller et activer WooCommerce%s."
+
+#: includes/class-natcash-gateway.php:25
+msgid "Natcash"
+msgstr "Natcash"
+
+#: includes/class-natcash-gateway.php:27
+msgid "Méthode de paiement manuelle pour Natcash en Haïti"
+msgstr "Méthode de paiement manuelle pour Natcash en Haïti"
+
+#: includes/class-natcash-gateway.php:50
+msgid "Activer/Désactiver"
+msgstr "Activer/Désactiver"
+
+#: includes/class-natcash-gateway.php:52
+msgid "Activer la méthode de paiement Natcash"
+msgstr "Activer la méthode de paiement Natcash"
+
+#: includes/class-natcash-gateway.php:55
+msgid "Titre"
+msgstr "Titre"
+
+#: includes/class-natcash-gateway.php:57
+msgid "Titre affiché aux clients lors du checkout."
+msgstr "Titre affiché aux clients lors du checkout."
+
+#: includes/class-natcash-gateway.php:62
+msgid "Description"
+msgstr "Description"
+
+#: includes/class-natcash-gateway.php:64
+msgid "Description affichée aux clients lors du checkout."
+msgstr "Description affichée aux clients lors du checkout."
+
+#: includes/class-natcash-gateway.php:65
+msgid "Payez avec Natcash - Service de paiement mobile en Haïti."
+msgstr "Payez avec Natcash - Service de paiement mobile en Haïti."
+
+#: includes/class-natcash-gateway.php:69
+msgid "Numéro de compte Natcash"
+msgstr "Numéro de compte Natcash"
+
+#: includes/class-natcash-gateway.php:71
+msgid "Votre numéro de compte Natcash pour recevoir les paiements."
+msgstr "Votre numéro de compte Natcash pour recevoir les paiements."
+
+#: includes/class-natcash-gateway.php:77
+msgid "Nom du compte Natcash"
+msgstr "Nom du compte Natcash"
+
+#: includes/class-natcash-gateway.php:79
+msgid "Le nom associé à votre compte Natcash."
+msgstr "Le nom associé à votre compte Natcash."
+
+#: includes/class-natcash-gateway.php:85
+msgid "Taux de change USD vers Gourdes"
+msgstr "Taux de change USD vers Gourdes"
+
+#: includes/class-natcash-gateway.php:87
+msgid "Taux de conversion de USD vers HTG."
+msgstr "Taux de conversion de USD vers HTG."
+
+#: includes/class-natcash-gateway.php:105
+msgid "Veuillez télécharger votre reçu de paiement Natcash"
+msgstr "Veuillez télécharger votre reçu de paiement Natcash"
+
+#: includes/class-natcash-gateway.php:118
+msgid "Commande introuvable."
+msgstr "Commande introuvable."
+
+#: includes/class-natcash-gateway.php:124
+msgid "Erreur lors du téléchargement du reçu. Veuillez réessayer."
+msgstr "Erreur lors du téléchargement du reçu. Veuillez réessayer."
+
+#: includes/class-natcash-gateway.php:137
+msgid "En attente de vérification du paiement Natcash."
+msgstr "En attente de vérification du paiement Natcash."
+
+#: includes/class-natcash-gateway.php:207
+msgid "Instructions de paiement Natcash"
+msgstr "Instructions de paiement Natcash"
+
+#: includes/class-natcash-gateway.php:208
+msgid "Votre commande a été reçue et est en attente de vérification du paiement."
+msgstr "Votre commande a été reçue et est en attente de vérification du paiement."
+
+#: includes/class-natcash-gateway.php:209
+msgid "Nous vérifierons votre reçu de paiement et mettrons à jour le statut de votre commande sous peu."
+msgstr "Nous vérifierons votre reçu de paiement et mettrons à jour le statut de votre commande sous peu."
+
+#: includes/class-natcash-gateway.php:221
+msgid "INSTRUCTIONS DE PAIEMENT NATCASH"
+msgstr "INSTRUCTIONS DE PAIEMENT NATCASH"
+
+#: includes/class-natcash-gateway.php:222
+#: includes/class-natcash-gateway.php:227
+msgid "Montant à payer: %s"
+msgstr "Montant à payer: %s"
+
+#: includes/class-natcash-gateway.php:223
+#: includes/class-natcash-gateway.php:228
+msgid "Numéro de compte: %s"
+msgstr "Numéro de compte: %s"
+
+#: includes/class-natcash-gateway.php:224
+#: includes/class-natcash-gateway.php:229
+msgid "Nom du compte: %s"
+msgstr "Nom du compte: %s"
+
+#: includes/class-natcash-gateway.php:240
+msgid "Merci pour votre commande. Voici les instructions pour compléter votre paiement Natcash."
+msgstr "Merci pour votre commande. Voici les instructions pour compléter votre paiement Natcash."
+
+#: includes/class-natcash-gateway.php:243
+msgid "Instructions de paiement - Commande #%s"
+msgstr "Instructions de paiement - Commande #%s"
+
+#: includes/class-natcash-gateway.php:252
+msgid "Détails du paiement Natcash"
+msgstr "Détails du paiement Natcash"
+
+#: includes/class-natcash-gateway.php:273
+msgid "Reçu de paiement:"
+msgstr "Reçu de paiement:"
+
+#: includes/class-natcash-gateway.php:274
+msgid "Voir le reçu"
+msgstr "Voir le reçu"
+
+#: includes/class-natcash-gateway.php:277
+msgid "Montant en HTG:"
+msgstr "Montant en HTG:"
+
+#: includes/class-natcash-gateway.php:278
+msgid "Compte Natcash:"
+msgstr "Compte Natcash:"
+
+#: includes/class-natcash-gateway.php:279
+msgid "Nom du compte:"
+msgstr "Nom du compte:"
+
+#: includes/class-natcash-gateway.php:283
+msgid "Approuver le paiement"
+msgstr "Approuver le paiement"
+
+#: includes/class-natcash-gateway.php:284
+msgid "Rejeter le paiement"
+msgstr "Rejeter le paiement"
+
+#: includes/class-natcash-gateway.php:297
+msgid "Permissions insuffisantes."
+msgstr "Permissions insuffisantes."
+
+#: includes/class-natcash-gateway.php:305
+msgid "Paiement Natcash approuvé par l'administrateur."
+msgstr "Paiement Natcash approuvé par l'administrateur."
+
+#: includes/class-natcash-gateway.php:308
+msgid "Paiement approuvé avec succès."
+msgstr "Paiement approuvé avec succès."
+
+#: includes/class-natcash-gateway.php:313
+msgid "Erreur lors de l'approbation du paiement."
+msgstr "Erreur lors de l'approbation du paiement."
+
+#: includes/class-natcash-gateway.php:327
+msgid "Permissions insuffisantes."
+msgstr "Permissions insuffisantes."
+
+#: includes/class-natcash-gateway.php:335
+msgid "Paiement Natcash rejeté par l'administrateur."
+msgstr "Paiement Natcash rejeté par l'administrateur."
+
+#: includes/class-natcash-gateway.php:338
+msgid "Paiement rejeté."
+msgstr "Paiement rejeté."
+
+#: includes/class-natcash-gateway.php:343
+msgid "Erreur lors du rejet du paiement."
+msgstr "Erreur lors du rejet du paiement."
+
+#: includes/class-natcash-gateway.php:353
+msgid "Aucun fichier reçu."
+msgstr "Aucun fichier reçu."
+
+#: includes/class-natcash-gateway.php:361
+msgid "Format de fichier non autorisé. Utilisez JPG, PNG ou PDF uniquement"
+msgstr "Format de fichier non autorisé. Utilisez JPG, PNG ou PDF uniquement"
+
+#: includes/class-natcash-gateway.php:367
+msgid "Fichier trop volumineux. Maximum 5MB autorisé"
+msgstr "Fichier trop volumineux. Maximum 5MB autorisé"
+
+#: includes/class-natcash-gateway.php:372
+msgid "Fichier validé avec succès."
+msgstr "Fichier validé avec succès."
+
+#: templates/payment-form.php:15
+msgid "Montant à payer"
+msgstr "Montant à payer"
+
+#: templates/payment-form.php:23
+msgid "Instructions de paiement"
+msgstr "Instructions de paiement"
+
+#: templates/payment-form.php:26
+msgid "Envoyez %s via Natcash au numéro : %s"
+msgstr "Envoyez %s via Natcash au numéro : %s"
+
+#: templates/payment-form.php:32
+msgid "Nom du compte : %s"
+msgstr "Nom du compte : %s"
+
+#: templates/payment-form.php:39
+msgid "Télécharger votre reçu de paiement"
+msgstr "Télécharger votre reçu de paiement"
+
+#: templates/payment-form.php:47
+msgid "Choisir un fichier"
+msgstr "Choisir un fichier"
+
+#: templates/payment-form.php:50
+msgid "Formats acceptés : JPG, PNG, PDF (Max 5MB)"
+msgstr "Formats acceptés : JPG, PNG, PDF (Max 5MB)"
+
+#: templates/payment-form.php:62
+msgid "Je confirme avoir effectué le paiement et téléchargé le reçu correspondant"
+msgstr "Je confirme avoir effectué le paiement et téléchargé le reçu correspondant"
+
+#: assets/js/natcash-payment.js:105
+msgid "Fichier sélectionné"
+msgstr "Fichier sélectionné"
+
+#: assets/js/natcash-payment.js:115
+msgid "Choisir un fichier"
+msgstr "Choisir un fichier"
+
+#: assets/js/natcash-payment.js:145
+msgid "Veuillez confirmer que vous avez effectué le paiement"
+msgstr "Veuillez confirmer que vous avez effectué le paiement"
+
