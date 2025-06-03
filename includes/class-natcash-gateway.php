@@ -22,6 +22,11 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
         $this->method_title = __('Natcash', 'natcash-payment');
         $this->method_description = __('Méthode de paiement manuelle pour Natcash en Haïti', 'natcash-payment');
         
+        // Supports
+        $this->supports = array(
+            'products'
+        );
+        
         // Charger les paramètres
         $this->init_form_fields();
         $this->init_settings();
@@ -40,9 +45,30 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
         add_action('woocommerce_email_before_order_table', array($this, 'email_instructions'), 10, 3);
         add_action('wp_ajax_natcash_upload_receipt', array($this, 'handle_receipt_upload'));
         add_action('wp_ajax_nopriv_natcash_upload_receipt', array($this, 'handle_receipt_upload'));
+        
+        // Hooks pour HPOS compatibility
         add_action('add_meta_boxes', array($this, 'add_order_meta_boxes'));
+        add_action('woocommerce_process_shop_order_meta', array($this, 'save_order_meta_boxes'));
+        
+        // Actions AJAX pour admin
         add_action('wp_ajax_natcash_approve_payment', array($this, 'approve_payment'));
         add_action('wp_ajax_natcash_reject_payment', array($this, 'reject_payment'));
+    }
+    
+    /**
+     * Vérifier si la passerelle est disponible
+     */
+    public function is_available() {
+        $is_available = ('yes' === $this->enabled);
+        
+        if ($is_available) {
+            // Vérifier que les champs obligatoires sont remplis
+            if (empty($this->account_number) || empty($this->account_name)) {
+                $is_available = false;
+            }
+        }
+        
+        return $is_available;
     }
     
     /**
@@ -108,8 +134,14 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
             echo wpautop(wptexturize($this->description));
         }
         
+        // Vérifier que WooCommerce est disponible et que le panier existe
+        if (!WC() || !WC()->cart) {
+            echo '<p>' . __('Erreur: Impossible de calculer le montant.', 'natcash-payment') . '</p>';
+            return;
+        }
+        
         // Calculer le montant en gourdes
-        $total_usd = WC()->cart->get_total('');
+        $total_usd = WC()->cart->get_total('edit');
         $total_htg = $this->convert_to_htg($total_usd);
         
         // Inclure le template de formulaire de paiement
@@ -151,15 +183,18 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
             );
         }
         
-        // Sauvegarder les informations de paiement
-        $order->update_meta_data('_natcash_receipt_url', $receipt_url);
-        $order->update_meta_data('_natcash_account_number', $this->account_number);
-        $order->update_meta_data('_natcash_account_name', $this->account_name);
-        $order->update_meta_data('_natcash_exchange_rate', $this->exchange_rate);
-        $order->update_meta_data('_natcash_amount_htg', $this->convert_to_htg($order->get_total()));
+        // Sauvegarder les informations de paiement (compatible HPOS)
+        $this->update_order_meta($order, '_natcash_receipt_url', $receipt_url);
+        $this->update_order_meta($order, '_natcash_account_number', $this->account_number);
+        $this->update_order_meta($order, '_natcash_account_name', $this->account_name);
+        $this->update_order_meta($order, '_natcash_exchange_rate', $this->exchange_rate);
+        $this->update_order_meta($order, '_natcash_amount_htg', $this->convert_to_htg($order->get_total()));
         
         // Changer le statut de la commande
         $order->update_status('on-hold', __('En attente de vérification du paiement Natcash.', 'natcash-payment'));
+        
+        // Sauvegarder la commande
+        $order->save();
         
         // Vider le panier
         WC()->cart->empty_cart();
@@ -254,9 +289,9 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
             return;
         }
         
-        $amount_htg = $order->get_meta('_natcash_amount_htg');
-        $account_number = $order->get_meta('_natcash_account_number');
-        $account_name = $order->get_meta('_natcash_account_name');
+        $amount_htg = $this->get_order_meta($order, '_natcash_amount_htg');
+        $account_number = $this->get_order_meta($order, '_natcash_account_number');
+        $account_name = $this->get_order_meta($order, '_natcash_account_name');
         
         if ($plain_text) {
             echo "\n" . __('INSTRUCTIONS DE PAIEMENT NATCASH', 'natcash-payment') . "\n";
@@ -308,10 +343,10 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
             return;
         }
         
-        $receipt_url = $order->get_meta('_natcash_receipt_url');
-        $amount_htg = $order->get_meta('_natcash_amount_htg');
-        $account_number = $order->get_meta('_natcash_account_number');
-        $account_name = $order->get_meta('_natcash_account_name');
+        $receipt_url = $this->get_order_meta($order, '_natcash_receipt_url');
+        $amount_htg = $this->get_order_meta($order, '_natcash_amount_htg');
+        $account_number = $this->get_order_meta($order, '_natcash_account_number');
+        $account_name = $this->get_order_meta($order, '_natcash_account_name');
         
         echo '<div class="natcash-order-details">';
         
@@ -334,6 +369,61 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
         echo '</div>';
         
         wp_nonce_field('natcash_admin_action', 'natcash_admin_nonce');
+    }
+    
+    /**
+     * Sauvegarder les meta boxes pour les commandes
+     */
+    public function save_order_meta_boxes($order_id) {
+        if (!isset($_POST['natcash_admin_nonce']) || !wp_verify_nonce($_POST['natcash_admin_nonce'], 'natcash_admin_action')) {
+            return;
+        }
+        
+        if (isset($_POST['_natcash_receipt_url'])) {
+            update_post_meta($order_id, '_natcash_receipt_url', sanitize_text_field($_POST['_natcash_receipt_url']));
+        }
+        
+        if (isset($_POST['_natcash_account_number'])) {
+            update_post_meta($order_id, '_natcash_account_number', sanitize_text_field($_POST['_natcash_account_number']));
+        }
+        
+        if (isset($_POST['_natcash_account_name'])) {
+            update_post_meta($order_id, '_natcash_account_name', sanitize_text_field($_POST['_natcash_account_name']));
+        }
+        
+        if (isset($_POST['_natcash_exchange_rate'])) {
+            update_post_meta($order_id, '_natcash_exchange_rate', sanitize_text_field($_POST['_natcash_exchange_rate']));
+        }
+        
+        if (isset($_POST['_natcash_amount_htg'])) {
+            update_post_meta($order_id, '_natcash_amount_htg', sanitize_text_field($_POST['_natcash_amount_htg']));
+        }
+    }
+    
+    /**
+     * Mettre à jour les métadonnées de commande (compatible HPOS)
+     */
+    private function update_order_meta($order, $key, $value) {
+        if (method_exists($order, 'update_meta_data')) {
+            // HPOS compatible
+            $order->update_meta_data($key, $value);
+        } else {
+            // Fallback pour les anciennes versions
+            update_post_meta($order->get_id(), $key, $value);
+        }
+    }
+    
+    /**
+     * Obtenir les métadonnées de commande (compatible HPOS)
+     */
+    private function get_order_meta($order, $key, $single = true) {
+        if (method_exists($order, 'get_meta')) {
+            // HPOS compatible
+            return $order->get_meta($key, $single);
+        } else {
+            // Fallback pour les anciennes versions
+            return get_post_meta($order->get_id(), $key, $single);
+        }
     }
     
     /**
@@ -422,4 +512,3 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
         ));
     }
 }
-

@@ -14,12 +14,20 @@
  * WC tested up to: 8.0
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires Plugins: woocommerce
  */
 
 // Empêcher l'accès direct
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Déclarer la compatibilité avec HPOS (High-Performance Order Storage)
+add_action('before_woocommerce_init', function() {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
 // Définir les constantes du plugin
 define('NATCASH_PAYMENT_VERSION', '1.0.0');
@@ -79,6 +87,19 @@ class NatcashPaymentPlugin {
         // Hooks d'activation et de désactivation
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        
+        // Hook pour s'assurer que la passerelle est disponible
+        add_action('woocommerce_init', array($this, 'woocommerce_init'));
+    }
+    
+    /**
+     * Actions lors de l'initialisation de WooCommerce
+     */
+    public function woocommerce_init() {
+        // S'assurer que la classe de passerelle est chargée
+        if (!class_exists('WC_Natcash_Gateway')) {
+            include_once NATCASH_PAYMENT_PLUGIN_PATH . 'includes/class-natcash-gateway.php';
+        }
     }
     
     /**
@@ -189,4 +210,3 @@ class NatcashPaymentPlugin {
 
 // Initialiser le plugin
 NatcashPaymentPlugin::get_instance();
-
