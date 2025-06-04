@@ -106,6 +106,11 @@ class NatcashPaymentPlugin {
      * Ajouter la classe de passerelle à WooCommerce
      */
     public function add_gateway_class($gateways) {
+        // S'assurer que la classe est chargée
+        if (!class_exists('WC_Natcash_Gateway')) {
+            include_once NATCASH_PAYMENT_PLUGIN_PATH . 'includes/class-natcash-gateway.php';
+        }
+        
         $gateways[] = 'WC_Natcash_Gateway';
         return $gateways;
     }

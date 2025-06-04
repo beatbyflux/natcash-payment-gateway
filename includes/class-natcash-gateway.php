@@ -59,16 +59,22 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
      * Vérifier si la passerelle est disponible
      */
     public function is_available() {
-        $is_available = ('yes' === $this->enabled);
-        
-        if ($is_available) {
-            // Vérifier que les champs obligatoires sont remplis
-            if (empty($this->account_number) || empty($this->account_name)) {
-                $is_available = false;
-            }
+        // Vérification de base : la passerelle doit être activée
+        if ('yes' !== $this->enabled) {
+            return false;
         }
         
-        return $is_available;
+        // Vérifier que les champs obligatoires sont configurés
+        if (empty($this->account_number) || empty($this->account_name)) {
+            return false;
+        }
+        
+        // Vérifier que le taux de change est valide
+        if (empty($this->exchange_rate) || !is_numeric($this->exchange_rate) || $this->exchange_rate <= 0) {
+            return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -510,5 +516,24 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
         wp_send_json_success(array(
             'message' => __('Fichier validé avec succès.', 'natcash-payment')
         ));
+    }
+    
+    /**
+     * Fonction de debug pour vérifier l'état de la passerelle
+     */
+    public function debug_gateway_status() {
+        $debug_info = array(
+            'enabled' => $this->enabled,
+            'account_number' => !empty($this->account_number) ? 'Configuré' : 'Non configuré',
+            'account_name' => !empty($this->account_name) ? 'Configuré' : 'Non configuré',
+            'exchange_rate' => $this->exchange_rate,
+            'is_available' => $this->is_available() ? 'Oui' : 'Non',
+            'woocommerce_loaded' => class_exists('WooCommerce') ? 'Oui' : 'Non',
+            'cart_exists' => (WC() && WC()->cart) ? 'Oui' : 'Non',
+            'cart_empty' => (WC() && WC()->cart) ? (WC()->cart->is_empty() ? 'Oui' : 'Non') : 'N/A'
+        );
+        
+        error_log('Natcash Gateway Debug: ' . print_r($debug_info, true));
+        return $debug_info;
     }
 }
