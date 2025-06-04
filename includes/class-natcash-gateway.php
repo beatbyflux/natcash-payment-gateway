@@ -119,15 +119,15 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
                 'custom_attributes' => array('required' => 'required'),
             ),
             'exchange_rate' => array(
-                'title' => __('Taux de change USD vers Gourdes', 'natcash-payment'),
+                'title' => __('Taux de change vers HTG', 'natcash-payment'),
                 'type' => 'number',
-                'description' => __('Taux de conversion de USD vers HTG.', 'natcash-payment'),
+                'description' => __('Taux de conversion de votre devise vers les Gourdes Haïtiennes (HTG). Par exemple, si 1 USD = 134 HTG, entrez 134. Si votre boutique utilise déjà HTG, ce taux ne sera pas utilisé.', 'natcash-payment'),
                 'default' => '134',
                 'desc_tip' => true,
                 'custom_attributes' => array(
                     'step' => '0.01',
-                    'min' => '1'
-                ),
+                    'min' => '0.01'
+                )
             ),
         );
     }
@@ -146,9 +146,14 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
             return;
         }
         
-        // Calculer le montant en gourdes
-        $total_usd = WC()->cart->get_total('edit');
-        $total_htg = $this->convert_to_htg($total_usd);
+        // Obtenir le montant total du panier
+        $total_amount = WC()->cart->get_total('edit');
+        
+        // Calculer le montant converti en HTG
+        $total_htg = $this->convert_to_htg($total_amount);
+        
+        // Variables pour le template
+        $total_usd = $total_amount; // Renommé pour compatibilité avec le template
         
         // Inclure le template de formulaire de paiement
         include NATCASH_PAYMENT_PLUGIN_PATH . 'templates/payment-form.php';
@@ -258,18 +263,42 @@ class WC_Natcash_Gateway extends WC_Payment_Gateway {
     }
     
     /**
-     * Convertir USD en HTG
+     * Convertir le montant en gourdes haïtiennes
      */
-    public function convert_to_htg($amount_usd) {
-        $rate = floatval($this->exchange_rate);
-        return $amount_usd * $rate;
+    public function convert_to_htg($amount) {
+        // Convertir en float pour s'assurer que c'est numérique
+        $amount = floatval($amount);
+        
+        // Obtenir la devise actuelle de WooCommerce
+        $current_currency = get_woocommerce_currency();
+        
+        // Si c'est déjà en HTG, pas de conversion nécessaire
+        if ($current_currency === 'HTG') {
+            return $amount;
+        }
+        
+        // Pour toutes les autres devises, appliquer le taux de change
+        $exchange_rate = floatval($this->exchange_rate);
+        if ($exchange_rate <= 0) {
+            $exchange_rate = 134; // Valeur par défaut
+        }
+        
+        return $amount * $exchange_rate;
     }
     
     /**
      * Formater le montant en gourdes
      */
     public function format_htg_amount($amount) {
-        return number_format($amount, 2, '.', ',') . ' HTG';
+        $current_currency = get_woocommerce_currency();
+        
+        if ($current_currency === 'HTG') {
+            return number_format($amount, 2, '.', ',') . ' HTG';
+        } else {
+            // Afficher la conversion
+            $original_amount = floatval($amount) / floatval($this->exchange_rate);
+            return number_format($original_amount, 2, '.', ',') . ' ' . $current_currency . ' = ' . number_format($amount, 2, '.', ',') . ' HTG';
+        }
     }
     
     /**

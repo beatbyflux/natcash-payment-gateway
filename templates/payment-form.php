@@ -7,36 +7,45 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$total_usd = WC()->cart->get_total('edit');
-$total_htg = $this->convert_to_htg($total_usd);
+// Obtenir la devise actuelle
+$current_currency = get_woocommerce_currency();
+$currency_symbol = get_woocommerce_currency_symbol();
+
+// Calculer les montants
+$original_amount = $total_usd;
+$converted_amount = $total_htg;
+
 ?>
 
-<div class="natcash-payment-form">
-    <div class="natcash-amount-display">
-        <h4><?php _e('Montant à payer', 'natcash-payment'); ?></h4>
-        <div class="amount-conversion">
-            <span class="usd-amount"><?php echo wc_price($total_usd); ?></span>
-            <span class="conversion-arrow">=</span>
-            <span class="htg-amount"><?php echo $this->format_htg_amount($total_htg); ?></span>
-        </div>
-    </div>
+<div id="natcash-payment-form" class="natcash-payment-form">
     
+    <div class="natcash-amount-display">
+        <h4><?php _e('Montant à payer:', 'natcash-payment'); ?></h4>
+        <?php if ($current_currency === 'HTG'): ?>
+            <p class="natcash-amount-htg">
+                <strong><?php echo number_format($original_amount, 2, '.', ',') . ' HTG'; ?></strong>
+            </p>
+        <?php else: ?>
+            <p class="natcash-amount-original">
+                <strong><?php echo $currency_symbol . number_format($original_amount, 2, '.', ',') . ' ' . $current_currency; ?></strong>
+            </p>
+            <p class="natcash-amount-converted">
+                <?php _e('Équivalent:', 'natcash-payment'); ?> 
+                <strong><?php echo number_format($converted_amount, 2, '.', ',') . ' HTG'; ?></strong>
+                <small>(<?php printf(__('Taux: 1 %s = %s HTG', 'natcash-payment'), $current_currency, number_format($this->exchange_rate, 2)); ?>)</small>
+            </p>
+        <?php endif; ?>
+    </div>
+
     <div class="natcash-instructions">
-        <h4><?php _e('Instructions de paiement', 'natcash-payment'); ?></h4>
-        <div class="payment-details">
-            <p class="instruction-text">
-                <?php printf(
-                    __('Envoyez %s via Natcash au numéro : %s', 'natcash-payment'),
-                    '<strong>' . $this->format_htg_amount($total_htg) . '</strong>',
-                    '<strong>' . esc_html($this->account_number) . '</strong>'
-                ); ?>
-            </p>
-            <p class="account-name">
-                <?php printf(
-                    __('Nom du compte : %s', 'natcash-payment'),
-                    '<strong>' . esc_html($this->account_name) . '</strong>'
-                ); ?>
-            </p>
+        <h4><?php _e('Instructions de paiement:', 'natcash-payment'); ?></h4>
+        <div class="natcash-payment-details">
+            <p><strong><?php _e('1. Envoyez le montant via Natcash:', 'natcash-payment'); ?></strong></p>
+            <ul>
+                <li><?php _e('Numéro de compte:', 'natcash-payment'); ?> <strong><?php echo esc_html($this->account_number); ?></strong></li>
+                <li><?php _e('Nom du compte:', 'natcash-payment'); ?> <strong><?php echo esc_html($this->account_name); ?></strong></li>
+                <li><?php _e('Montant:', 'natcash-payment'); ?> <strong><?php echo number_format($converted_amount, 2, '.', ',') . ' HTG'; ?></strong></li>
+            </ul>
         </div>
     </div>
     
@@ -141,4 +150,3 @@ jQuery(document).ready(function($) {
     });
 });
 </script>
-
